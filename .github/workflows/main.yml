@@ -1,22 +1,20 @@
-name: Update Profile Activity
+ name: Update Profile Activity
 on:
   schedule:
-    - cron: '0 * * * *' # Vérifie chaque heure
-  workflow_dispatch: # Permet de cliquer sur un bouton pour tester
-  push:
-    branches: ["main"]
+    - cron: '0 * * * *' # Toutes les heures
+  workflow_dispatch: # Pour le lancer à la main
+
+permissions:
+  contents: write
 
 jobs:
   update-readme:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@v4
-      
       - uses: jamesgeorge007/github-activity-readme@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           COMMIT_MSG: "⚡ Mise à jour de l'activité"
-          MAX_LINES: 2
+          MAX_LINES: 5
