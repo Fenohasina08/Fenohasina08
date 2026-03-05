@@ -23,23 +23,14 @@
 <p align="center">
 
 <img src="https://img.shields.io/badge/HTML5-orange?style=for-the-badge&logo=html5"/>
-
 <img src="https://img.shields.io/badge/CSS3-blue?style=for-the-badge&logo=css3"/>
-
 <img src="https://img.shields.io/badge/JavaScript-yellow?style=for-the-badge&logo=javascript"/>
-
 <img src="https://img.shields.io/badge/TypeScript-blue?style=for-the-badge&logo=typescript"/>
-
 <img src="https://img.shields.io/badge/React-black?style=for-the-badge&logo=react"/>
-
 <img src="https://img.shields.io/badge/TailwindCSS-38BDF8?style=for-the-badge&logo=tailwindcss"/>
-
 <img src="https://img.shields.io/badge/PostgreSQL-blue?style=for-the-badge&logo=postgresql"/>
-
 <img src="https://img.shields.io/badge/Java-red?style=for-the-badge&logo=openjdk"/>
-
 <img src="https://img.shields.io/badge/Git-orange?style=for-the-badge&logo=git"/>
-
 <img src="https://img.shields.io/badge/GitHub-black?style=for-the-badge&logo=github"/>
 
 </p>
@@ -49,11 +40,8 @@
 # 📊 Statistiques GitHub
 
 <p align="center">
-
 <img height="180em" src="https://github-readme-stats.vercel.app/api?username=Fenohasina08&show_icons=true&theme=tokyonight"/>
-
 <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Fenohasina08&layout=compact&theme=tokyonight"/>
-
 </p>
 
 ---
@@ -66,7 +54,7 @@
 
 ---
 
- # 📈 Activité GitHub (par mois)
+# 📈 Activité GitHub (par mois)
 
 <p align="center">
 <img src="https://github-readme-activity-graph.vercel.app/graph?username=Fenohasina08&theme=tokyo-night&area=true&hide_border=true&custom_title=Activité+GitHub+par+mois"/>
@@ -85,10 +73,10 @@
 # 🚀 Projets
 
 | Projet      | Description                      | Technologies       |
-| ----------- | -------------------------------- | ------------------ |
-| WorldRanks  | Interface de classement des pays | React / TypeScript |
-| Portamndpt  | Site institutionnel              | HTML / CSS         |
-| Typing Test | Application de test de frappe    | JavaScript         |
+| ----------- | -------------------------------- | ----------------- |
+| WorldRanks  | Interface de classement des pays | React / TypeScript|
+| Portamndpt  | Site institutionnel              | HTML / CSS        |
+| Typing Test | Application de test de frappe    | JavaScript        |
 
 ---
 
