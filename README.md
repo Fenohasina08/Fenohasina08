@@ -1,9 +1,8 @@
+ <div align="center">
 
-<div align="center">
-
-# 👋 Bonjour, je suis Herimamy Ra-fanomezana
-
-### 💻 Développeur Front-End | React | JavaScript
+# 👋 Bonjour, je suis Herimamy !
+  
+![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&pause=1000&color=36BCF7&center=true&vCenter=true&width=435&lines=Développeur+Front-End+React;Passionné+par+le+Design+UI/UX;Apprenti+Java+%26+SQL)
 
 [![Portfolio](https://img.shields.io/badge/Portfolio-Visite-FF7139?style=for-the-badge)](https://herimamyfenohasina.netlify.app)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/herimamy-fenohasina-ra-fanomezana-40370a386)
@@ -13,38 +12,9 @@
 
 ---
 
-## 📊 Statistiques GitHub
-
-<div align="center">
-
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=Fenohasina08&show_icons=true&theme=radical)
-
-</div>
+### 🚀 À propos de moi
+Je suis un développeur passionné par la création d'interfaces utilisateur modernes et performantes. Actuellement en plein développement de projets comme **Tantsaha Connect** et **World Ranks**.
 
 ---
 
-## 🛠️ Technologies
-
-**Front-End:** React · JavaScript · HTML · CSS · Tailwind CSS  
-**Back-End:** Node.js · Java  
-**Outils:** Git · GitHub · VS Code
-
----
-
-## 🏆 Projets
-
-| Projet | Description | Lien |
-|--------|-------------|------|
-| **Portfolio** | Site personnel professionnel | [Voir](https://herimamyfenohasina.netlify.app) |
-| **Tantsaha Connect** | Plateforme agricole | [Code](https://github.com/Fenohasina08/tantsaha-connect) |
-| **E-Kaly** | Application de commande de nourriture | [Code](https://github.com/Fenohasina08/e-kaly) |
-
----
-
-<div align="center">
-
-### 📫 Contactez-moi pour collaborer !
-
-⭐️ **Explorez mes repositories ci-dessous !** ⭐️
-
-</div>
+## ✍️ Activité récente
