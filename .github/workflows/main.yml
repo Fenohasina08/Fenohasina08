@@ -2,8 +2,8 @@
 
 on:
   schedule:
-    - cron: '0 * * * *' # S'exécute chaque heure
-  workflow_dispatch: # Pour le lancer manuellement
+    - cron: '0 * * * *'
+  workflow_dispatch:
 
 jobs:
   update-readme:
