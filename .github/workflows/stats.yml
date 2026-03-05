@@ -3,16 +3,21 @@
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: "0 0 * * *"
 
 jobs:
   update-stats:
     runs-on: ubuntu-latest
+
     permissions:
       contents: write
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: anmol098/waka-readme-stats@master
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Update WakaTime stats
+        uses: anmol098/waka-readme-stats@master
         with:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SHOW_LANGUAGE: "true"
