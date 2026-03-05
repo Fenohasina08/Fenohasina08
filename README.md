@@ -12,7 +12,11 @@
 ---
 
 ### 📊 Langages les plus utilisés
----
+---## 📊 GitHub Stats
+
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=Fenohasina08&show_icons=true&theme=tokyonight)
+
+![Top Langages](https://github-readme-stats.vercel.app/api/top-langs/?username=Fenohasina08&layout=compact&theme=tokyonight)
 
 ### 📈 Statistiques Globales
 <p align="center">
