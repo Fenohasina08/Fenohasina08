@@ -26,40 +26,77 @@ def get_commits_for_repo(repo_full_name, since):
         'per_page': 100
     }
     commits = []
+    page = 1
     while url:
+        print(f"  Récupération page {page} pour {repo_full_name}")
         response = requests.get(url, headers=HEADERS, params=params)
         response.raise_for_status()
-        commits.extend(response.json())
+        data = response.json()
+        print(f"  {len(data)} commits dans cette page")
+        commits.extend(data)
         url = response.links.get('next', {}).get('url')
         params = None
+        page += 1
     return commits
 
 def main():
-    # Date de début très ancienne pour couvrir tous les commits
+    print("=== DÉBUT DU SCRIPT ===")
+    print(f"Token présent: {'oui' if GITHUB_TOKEN else 'non'}")
+
     start_date = datetime(2000, 1, 1, tzinfo=pytz.UTC)
-    repos = get_all_repos()
-    
+    print(f"Date de début: {start_date}")
+
+    try:
+        repos = get_all_repos()
+        print(f"Nombre total de dépôts trouvés: {len(repos)}")
+    except Exception as e:
+        print(f"Erreur lors de la récupération des dépôts: {e}")
+        return
+
     commits_par_annee_mois = defaultdict(lambda: defaultdict(int))
     total_commits = 0
 
     for repo in repos:
+        repo_name = repo['name']
         if repo['fork']:
+            print(f"Dépôt {repo_name} est un fork, ignoré")
             continue
+        print(f"\n--- Traitement du dépôt: {repo_name} ---")
         try:
             commits = get_commits_for_repo(repo['full_name'], start_date)
+            print(f"Total commits récupérés pour {repo_name}: {len(commits)}")
         except Exception as e:
-            print(f"Erreur pour {repo['full_name']}: {e}")
+            print(f"Erreur pour {repo_name}: {e}")
             continue
+
         for commit in commits:
-            if commit.get('author') and commit['author'].get('login') == USERNAME:
+            # Vérification de l'auteur
+            author = commit.get('author')
+            if author and author.get('login') == USERNAME:
                 date_str = commit['commit']['author']['date']
                 date = datetime.fromisoformat(date_str.replace('Z', '+00:00'))
                 annee = date.year
                 mois = date.month
                 commits_par_annee_mois[annee][mois] += 1
                 total_commits += 1
+            else:
+                # Afficher quelques exemples de commits ignorés (pour debug)
+                if len(commits) < 10:  # Limite pour ne pas surcharger
+                    sha = commit.get('sha', 'inconnu')
+                    author_login = author.get('login') if author else 'None'
+                    print(f"  Commit ignoré {sha}: auteur={author_login}")
 
-    # Années à afficher (de 2024 à l'année en cours)
+    print(f"\n=== RÉSULTATS ===")
+    print(f"Total des commits comptés: {total_commits}")
+
+    # Vérification croisée avec le tableau
+    somme_tableau = 0
+    for an in commits_par_annee_mois:
+        for mois in commits_par_annee_mois[an]:
+            somme_tableau += commits_par_annee_mois[an][mois]
+    print(f"Somme du tableau (commits par mois): {somme_tableau}")
+
+    # Construction du tableau (inchangée)
     annee_courante = datetime.now().year
     mois_courant = datetime.now().month
     annees = list(range(2024, annee_courante + 1))
@@ -69,7 +106,6 @@ def main():
         "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
     ]
 
-    # Construction du tableau mensuel
     header = "| Mois | " + " | ".join(str(a) for a in annees) + " |"
     separator = "|" + "---|" * (len(annees) + 1)
     lignes = [header, separator]
@@ -87,11 +123,16 @@ def main():
 
     table = "\n".join(lignes)
 
-    # Lire le README actuel
-    with open('README.md', 'r') as f:
-        content = f.read()
+    # Lecture et mise à jour du README
+    try:
+        with open('README.md', 'r') as f:
+            content = f.read()
+        print("README.md lu avec succès")
+    except Exception as e:
+        print(f"Erreur lecture README: {e}")
+        return
 
-    # Insérer le tableau mensuel
+    # Mise à jour du tableau
     start_marker = '<!-- MONTHLY_COMMITS_START -->'
     end_marker = '<!-- MONTHLY_COMMITS_END -->'
     new_section = f"{start_marker}\n\n{table}\n\n{end_marker}"
@@ -100,10 +141,12 @@ def main():
         import re
         pattern = re.escape(start_marker) + '.*?' + re.escape(end_marker)
         content = re.sub(pattern, new_section, content, flags=re.DOTALL)
+        print("Section tableau remplacée")
     else:
+        print("Marqueurs du tableau non trouvés, ajout...")
         content = content.replace('# Active GitHub (par mois)', f'# Active GitHub (par mois)\n\n{new_section}')
 
-    # Insérer le total des commits
+    # Mise à jour du total
     total_marker_start = '<!-- TOTAL_CONTRIBUTIONS_START -->'
     total_marker_end = '<!-- TOTAL_CONTRIBUTIONS_END -->'
     total_line = f"{total_marker_start}\n\n**Total des commits : {total_commits}**\n\n{total_marker_end}"
@@ -111,14 +154,21 @@ def main():
     if total_marker_start in content and total_marker_end in content:
         pattern_total = re.escape(total_marker_start) + '.*?' + re.escape(total_marker_end)
         content = re.sub(pattern_total, total_line, content, flags=re.DOTALL)
+        print("Section total remplacée")
     else:
+        print("Marqueurs du total non trouvés, ajout...")
         content = content.replace('# 🔥 Streak de contributions', f'# 🔥 Streak de contributions\n\n{total_line}')
 
-    with open('README.md', 'w') as f:
-        f.write(content)
+    try:
+        with open('README.md', 'w') as f:
+            f.write(content)
+        print("README.md écrit avec succès")
+    except Exception as e:
+        print(f"Erreur écriture README: {e}")
+        return
 
-    # Pour le message de commit automatique
     print(f"TOTAL_COMMITS={total_commits}")
+    print("=== FIN DU SCRIPT ===")
 
 if __name__ == '__main__':
     main()
