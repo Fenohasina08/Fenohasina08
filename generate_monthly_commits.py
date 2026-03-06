@@ -1,8 +1,9 @@
-import os
+ import os
 import requests
 from collections import defaultdict
 from datetime import datetime, timedelta
 import pytz
+import calendar
 
 GITHUB_TOKEN = os.getenv('GH_TOKEN')
 USERNAME = 'Fenohasina08'
@@ -35,15 +36,18 @@ def get_commits_for_repo(repo_full_name, since):
     return commits
 
 def main():
-    since_date = datetime.now(pytz.UTC) - timedelta(days=365)
+    # Commits depuis le 1er janvier 2024 jusqu'à aujourd'hui
+    start_date = datetime(2024, 1, 1, tzinfo=pytz.UTC)
     repos = get_all_repos()
-    monthly_counts = defaultdict(int)
+    
+    # Dictionnaire : commits[année][mois] = nombre
+    commits_par_annee_mois = defaultdict(lambda: defaultdict(int))
 
     for repo in repos:
         if repo['fork']:
             continue
         try:
-            commits = get_commits_for_repo(repo['full_name'], since_date)
+            commits = get_commits_for_repo(repo['full_name'], start_date)
         except Exception as e:
             print(f"Erreur pour {repo['full_name']}: {e}")
             continue
@@ -51,27 +55,47 @@ def main():
             if commit.get('author') and commit['author'].get('login') == USERNAME:
                 date_str = commit['commit']['author']['date']
                 date = datetime.fromisoformat(date_str.replace('Z', '+00:00'))
-                month_key = date.strftime('%Y-%m')
-                monthly_counts[month_key] += 1
+                annee = date.year
+                mois = date.month
+                commits_par_annee_mois[annee][mois] += 1
 
-    months = []
-    for i in range(11, -1, -1):
-        d = datetime.now() - timedelta(days=30*i)
-        month = d.strftime('%Y-%m')
-        months.append(month)
+    # Déterminer la plage d'années à afficher
+    if commits_par_annee_mois:
+        annees = sorted(commits_par_annee_mois.keys())
+        premiere = min(annees)
+        derniere = max(annees)
+        annees = list(range(premiere, derniere + 1))
+    else:
+        # Si aucun commit, afficher 2024-2026 par défaut
+        annees = [2024, 2025, 2026]
 
-    table = "| Mois | Commits |\n|------|---------|\n"
-    for month in months:
-        count = monthly_counts.get(month, 0)
-        month_name = datetime.strptime(month, '%Y-%m').strftime('%B %Y')
-        table += f"| {month_name} | {count} |\n"
+    # Mois en français
+    mois_fr = [
+        "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+        "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
+    ]
 
+    # Construction du tableau Markdown
+    header = "| Mois | " + " | ".join(str(a) for a in annees) + " |"
+    separator = "|------|" + "|".join("------" for _ in annees) + "|"
+    lignes = [header, separator]
+
+    for mois_num in range(1, 13):
+        ligne = f"| {mois_fr[mois_num-1]} |"
+        for an in annees:
+            count = commits_par_annee_mois[an].get(mois_num, 0)
+            ligne += f" {count} |"
+        lignes.append(ligne)
+
+    table = "\n".join(lignes)
+
+    # Mise à jour du README
     with open('README.md', 'r') as f:
         content = f.read()
 
     start_marker = '<!-- MONTHLY_COMMITS_START -->'
     end_marker = '<!-- MONTHLY_COMMITS_END -->'
-    new_section = f"{start_marker}\n\n{table}\n{end_marker}"
+    new_section = f"{start_marker}\n\n{table}\n\n{end_marker}"
 
     if start_marker in content and end_marker in content:
         import re
