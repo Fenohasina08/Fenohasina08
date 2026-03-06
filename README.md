@@ -47,7 +47,7 @@
 
 <!-- TOTAL_CONTRIBUTIONS_START -->
 
-**Total des commits : 154**
+**Total des commits : 156**
 
 <!-- TOTAL_CONTRIBUTIONS_END -->
 ---
@@ -60,7 +60,7 @@
 |---|---|---|---|
 | Janvier | 0 | 0 | 13 |
 | Février | 0 | 0 | 33 |
-| Mars | 0 | 2 | 73 |
+| Mars | 0 | 2 | 75 |
 | Avril | 0 | 6 | _ |
 | Mai | 0 | 1 | _ |
 | Juin | 0 | 1 | _ |
