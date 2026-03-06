@@ -1,4 +1,4 @@
-import os
+ import os
 import requests
 from collections import defaultdict
 from datetime import datetime, timedelta
@@ -35,12 +35,13 @@ def get_commits_for_repo(repo_full_name, since):
     return commits
 
 def main():
-    # Commits depuis le 1er janvier 2024
-    start_date = datetime(2024, 1, 1, tzinfo=pytz.UTC)
+    # Date de début très ancienne pour couvrir tous les commits (2000-01-01)
+    start_date = datetime(2000, 1, 1, tzinfo=pytz.UTC)
     repos = get_all_repos()
     
-    # Dictionnaire : commits[année][mois] = nombre
+    # Pour les mois
     commits_par_annee_mois = defaultdict(lambda: defaultdict(int))
+    total_global = 0
 
     for repo in repos:
         if repo['fork']:
@@ -57,6 +58,7 @@ def main():
                 annee = date.year
                 mois = date.month
                 commits_par_annee_mois[annee][mois] += 1
+                total_global += 1
 
     # Années à afficher (de 2024 à l'année en cours)
     annee_courante = datetime.now().year
@@ -68,7 +70,7 @@ def main():
         "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
     ]
 
-    # Construction du tableau
+    # Construction du tableau mensuel
     header = "| Mois | " + " | ".join(str(a) for a in annees) + " |"
     separator = "|" + "---|" * (len(annees) + 1)
     lignes = [header, separator]
@@ -86,10 +88,11 @@ def main():
 
     table = "\n".join(lignes)
 
-    # Mise à jour du README
+    # Lire le README actuel
     with open('README.md', 'r') as f:
         content = f.read()
 
+    # Insérer le tableau mensuel entre les marqueurs existants
     start_marker = '<!-- MONTHLY_COMMITS_START -->'
     end_marker = '<!-- MONTHLY_COMMITS_END -->'
     new_section = f"{start_marker}\n\n{table}\n\n{end_marker}"
@@ -101,12 +104,23 @@ def main():
     else:
         content = content.replace('# Active GitHub (par mois)', f'# Active GitHub (par mois)\n\n{new_section}')
 
+    # Insérer le total global dans une nouvelle section (par exemple sous "🔥 Streak de contributions")
+    total_marker_start = '<!-- TOTAL_CONTRIBUTIONS_START -->'
+    total_marker_end = '<!-- TOTAL_CONTRIBUTIONS_END -->'
+    total_line = f"{total_marker_start}\n\n**Total de tous les commits : {total_global}**\n\n{total_marker_end}"
+
+    if total_marker_start in content and total_marker_end in content:
+        pattern_total = re.escape(total_marker_start) + '.*?' + re.escape(total_marker_end)
+        content = re.sub(pattern_total, total_line, content, flags=re.DOTALL)
+    else:
+        # On ajoute la ligne après la section "🔥 Streak de contributions"
+        content = content.replace('# 🔥 Streak de contributions', f'# 🔥 Streak de contributions\n\n{total_line}')
+
     with open('README.md', 'w') as f:
         f.write(content)
 
     # Pour le message de commit automatique
-    total = sum(sum(mois.values()) for mois in commits_par_annee_mois.values())
-    print(f"TOTAL_COMMITS={total}")
+    print(f"TOTAL_COMMITS={total_global}")
 
 if __name__ == '__main__':
     main()
