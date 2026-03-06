@@ -58,20 +58,20 @@
 
 <!-- MONTHLY_COMMITS_START -->
 
-| Mois | Commits |
-|------|---------|
-| April 2025 | 6 |
-| May 2025 | 1 |
-| June 2025 | 1 |
-| July 2025 | 10 |
-| August 2025 | 5 |
-| September 2025 | 4 |
-| October 2025 | 0 |
-| November 2025 | 0 |
-| December 2025 | 4 |
-| January 2026 | 13 |
-| February 2026 | 33 |
-| March 2026 | 50 |
+| Mois | 2024 | 2025 | 2026 |
+|---|---|---|---|
+| Janvier | 0 | 0 | 13 |
+| Février | 0 | 0 | 33 |
+| Mars | 0 | 2 | 53 |
+| Avril | 0 | 6 | 0 |
+| Mai | 0 | 1 | 0 |
+| Juin | 0 | 1 | 0 |
+| Juillet | 0 | 10 | 0 |
+| Août | 0 | 5 | 0 |
+| Septembre | 0 | 4 | 0 |
+| Octobre | 2 | 0 | 0 |
+| Novembre | 0 | 0 | 0 |
+| Décembre | 0 | 4 | 0 |
 
 <!-- MONTHLY_COMMITS_END -->
 
