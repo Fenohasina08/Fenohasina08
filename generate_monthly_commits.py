@@ -60,6 +60,7 @@ def main():
 
     # Années à afficher (de 2024 à l'année en cours)
     annee_courante = datetime.now().year
+    mois_courant = datetime.now().month
     annees = list(range(2024, annee_courante + 1))
 
     mois_fr = [
@@ -75,8 +76,12 @@ def main():
     for mois_num in range(1, 13):
         ligne = f"| {mois_fr[mois_num-1]} |"
         for an in annees:
-            count = commits_par_annee_mois[an].get(mois_num, 0)
-            ligne += f" {count} |"
+            if an == annee_courante and mois_num > mois_courant:
+                cellule = "_"
+            else:
+                count = commits_par_annee_mois[an].get(mois_num, 0)
+                cellule = str(count)
+            ligne += f" {cellule} |"
         lignes.append(ligne)
 
     table = "\n".join(lignes)
@@ -94,7 +99,6 @@ def main():
         pattern = re.escape(start_marker) + '.*?' + re.escape(end_marker)
         content = re.sub(pattern, new_section, content, flags=re.DOTALL)
     else:
-        # Si les marqueurs ne sont pas trouvés, on les ajoute
         content = content.replace('# Active GitHub (par mois)', f'# Active GitHub (par mois)\n\n{new_section}')
 
     with open('README.md', 'w') as f:
