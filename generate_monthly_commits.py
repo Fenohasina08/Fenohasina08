@@ -1,9 +1,8 @@
- import os
+import os
 import requests
 from collections import defaultdict
 from datetime import datetime, timedelta
 import pytz
-import calendar
 
 GITHUB_TOKEN = os.getenv('GH_TOKEN')
 USERNAME = 'Fenohasina08'
@@ -36,7 +35,7 @@ def get_commits_for_repo(repo_full_name, since):
     return commits
 
 def main():
-    # Commits depuis le 1er janvier 2024 jusqu'à aujourd'hui
+    # Commits depuis le 1er janvier 2024
     start_date = datetime(2024, 1, 1, tzinfo=pytz.UTC)
     repos = get_all_repos()
     
@@ -59,25 +58,18 @@ def main():
                 mois = date.month
                 commits_par_annee_mois[annee][mois] += 1
 
-    # Déterminer la plage d'années à afficher
-    if commits_par_annee_mois:
-        annees = sorted(commits_par_annee_mois.keys())
-        premiere = min(annees)
-        derniere = max(annees)
-        annees = list(range(premiere, derniere + 1))
-    else:
-        # Si aucun commit, afficher 2024-2026 par défaut
-        annees = [2024, 2025, 2026]
+    # Années à afficher (de 2024 à l'année en cours)
+    annee_courante = datetime.now().year
+    annees = list(range(2024, annee_courante + 1))
 
-    # Mois en français
     mois_fr = [
         "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
         "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
     ]
 
-    # Construction du tableau Markdown
+    # Construction du tableau
     header = "| Mois | " + " | ".join(str(a) for a in annees) + " |"
-    separator = "|------|" + "|".join("------" for _ in annees) + "|"
+    separator = "|" + "---|" * (len(annees) + 1)
     lignes = [header, separator]
 
     for mois_num in range(1, 13):
@@ -102,10 +94,15 @@ def main():
         pattern = re.escape(start_marker) + '.*?' + re.escape(end_marker)
         content = re.sub(pattern, new_section, content, flags=re.DOTALL)
     else:
+        # Si les marqueurs ne sont pas trouvés, on les ajoute
         content = content.replace('# Active GitHub (par mois)', f'# Active GitHub (par mois)\n\n{new_section}')
 
     with open('README.md', 'w') as f:
         f.write(content)
+
+    # Pour le message de commit automatique
+    total = sum(sum(mois.values()) for mois in commits_par_annee_mois.values())
+    print(f"TOTAL_COMMITS={total}")
 
 if __name__ == '__main__':
     main()
