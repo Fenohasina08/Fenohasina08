@@ -47,7 +47,7 @@
 
 <!-- TOTAL_CONTRIBUTIONS_START -->
 
-**Total de tous les commits : 150**
+**Total de toutes les contributions (commits, issues, PR, etc.) : 0**
 
 <!-- TOTAL_CONTRIBUTIONS_END -->
 ---
@@ -60,7 +60,7 @@
 |---|---|---|---|
 | Janvier | 0 | 0 | 13 |
 | Février | 0 | 0 | 33 |
-| Mars | 0 | 2 | 69 |
+| Mars | 0 | 2 | 71 |
 | Avril | 0 | 6 | _ |
 | Mai | 0 | 1 | _ |
 | Juin | 0 | 1 | _ |
