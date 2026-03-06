@@ -72,8 +72,8 @@
 # 🏆 Trophées GitHub
 
 <p align="center">
-<img src="https://github-profile-trophy.vercel.app/?username=Fenohasina08&theme=tokyonight&margin-w=15" alt="Trophées de profil GitHub de Fenohasina08/  >
-</p>
+ <img src="https://github-profile-trophy.vercel.app/?username=Fenohasina08&theme=tokyonight&margin-w=15" alt="Trophées de profil GitHub de Fenohasina08">
+ </p>
 
 ---
 
