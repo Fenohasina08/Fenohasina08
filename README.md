@@ -57,6 +57,22 @@
 # 📈 Activité GitHub (par mois)
 
 <!-- MONTHLY_COMMITS_START -->
+
+| Mois | Commits |
+|------|---------|
+| April 2025 | 6 |
+| May 2025 | 1 |
+| June 2025 | 1 |
+| July 2025 | 10 |
+| August 2025 | 5 |
+| September 2025 | 4 |
+| October 2025 | 0 |
+| November 2025 | 0 |
+| December 2025 | 4 |
+| January 2026 | 13 |
+| February 2026 | 33 |
+| March 2026 | 50 |
+
 <!-- MONTHLY_COMMITS_END -->
 
 ---
