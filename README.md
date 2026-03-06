@@ -36,15 +36,7 @@
 </p>
 
 ---
-
-# 📊 Statistiques GitHub
-
-<p align="center">
-<img height="180em" src="https://github-readme-stats.vercel.app/api?username=Fenohasina08&show_icons=true&theme=tokyonight"/>
-<img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Fenohasina08&layout=compact&theme=tokyonight"/>
-</p>
-
----
+ 
 
 # 🔥 Streak de contributions
 
