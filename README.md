@@ -56,9 +56,8 @@
 
 # 📈 Activité GitHub (par mois)
 
-<p align="center">
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=Fenohasina08&theme=tokyo-night&area=true&hide_border=true&custom_title=Activité+GitHub+par+mois"/>
-</p>
+<!-- MONTHLY_COMMITS_START -->
+<!-- MONTHLY_COMMITS_END -->
 
 ---
 
