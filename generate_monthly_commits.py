@@ -34,14 +34,52 @@ def get_commits_for_repo(repo_full_name, since):
         params = None
     return commits
 
+def get_total_contributions_graphql():
+    """Récupère le nombre total de contributions (commits, issues, PR, etc.) depuis le début via GraphQL."""
+    query = """
+    {
+      user(login: "%s") {
+        contributionsCollection(from: "2008-01-01T00:00:00Z", to: "%s") {
+          contributionCalendar {
+            totalContributions
+          }
+        }
+      }
+    }
+    """ % (USERNAME, datetime.now(pytz.UTC).isoformat().replace('+00:00', 'Z'))
+
+    response = requests.post(
+        'https://api.github.com/graphql',
+        headers=HEADERS,
+        json={'query': query}
+    )
+    if response.status_code == 200:
+        data = response.json()
+        try:
+            return data['data']['user']['contributionsCollection']['contributionCalendar']['totalContributions']
+        except (KeyError, TypeError):
+            print("Erreur lors du parsing de la réponse GraphQL")
+            return None
+    else:
+        print(f"Erreur GraphQL: {response.status_code}")
+        return None
+
 def main():
+    # Récupérer le total des contributions (tous types) via GraphQL
+    total_contributions = get_total_contributions_graphql()
+    if total_contributions is None:
+        # Fallback sur le calcul des commits (REST) si GraphQL échoue
+        total_contributions = 0
+        # (on va le recalculer plus tard, mais pour l'instant on laisse 0)
+        print("Fallback sur le calcul des commits REST")
+
     # Date de début très ancienne pour couvrir tous les commits (2000-01-01)
     start_date = datetime(2000, 1, 1, tzinfo=pytz.UTC)
     repos = get_all_repos()
     
     # Pour les mois
     commits_par_annee_mois = defaultdict(lambda: defaultdict(int))
-    total_global = 0
+    total_commits = 0  # pour le fallback éventuel
 
     for repo in repos:
         if repo['fork']:
@@ -58,7 +96,11 @@ def main():
                 annee = date.year
                 mois = date.month
                 commits_par_annee_mois[annee][mois] += 1
-                total_global += 1
+                total_commits += 1
+
+    # Si GraphQL a échoué, on utilise total_commits comme fallback
+    if total_contributions is None:
+        total_contributions = total_commits
 
     # Années à afficher (de 2024 à l'année en cours)
     annee_courante = datetime.now().year
@@ -104,10 +146,10 @@ def main():
     else:
         content = content.replace('# Active GitHub (par mois)', f'# Active GitHub (par mois)\n\n{new_section}')
 
-    # Insérer le total global dans une nouvelle section (par exemple sous "🔥 Streak de contributions")
+    # Insérer le total des contributions (GraphQL) dans la section streak
     total_marker_start = '<!-- TOTAL_CONTRIBUTIONS_START -->'
     total_marker_end = '<!-- TOTAL_CONTRIBUTIONS_END -->'
-    total_line = f"{total_marker_start}\n\n**Total de tous les commits : {total_global}**\n\n{total_marker_end}"
+    total_line = f"{total_marker_start}\n\n**Total de toutes les contributions (commits, issues, PR, etc.) : {total_contributions}**\n\n{total_marker_end}"
 
     if total_marker_start in content and total_marker_end in content:
         pattern_total = re.escape(total_marker_start) + '.*?' + re.escape(total_marker_end)
@@ -120,7 +162,7 @@ def main():
         f.write(content)
 
     # Pour le message de commit automatique
-    print(f"TOTAL_COMMITS={total_global}")
+    print(f"TOTAL_COMMITS={total_contributions}")
 
 if __name__ == '__main__':
     main()
