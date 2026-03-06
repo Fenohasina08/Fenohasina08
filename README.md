@@ -86,14 +86,7 @@
 | Typing Test | Application de test de frappe    | JavaScript        |
 
 ---
-
-# 🐍 Contribution Snake
-
-<p align="center">
-<img src="https://github.com/Fenohasina08/Fenohasina08/blob/output/github-contribution-grid-snake.svg"/>
-</p>
-
----
+ 
 
 # 🌐 Me contacter
 
