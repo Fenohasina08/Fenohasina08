@@ -39,12 +39,7 @@
  
 
  
-# 🔥 Streak de contributions
-
-<p align="center">
-<img src="https://streak-stats.demolab.com?user=Fenohasina08&theme=tokyonight"/>
-</p>
-
+ 
  
 
 # 🚀 Projets
