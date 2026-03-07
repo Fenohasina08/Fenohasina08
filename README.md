@@ -45,43 +45,7 @@
 <img src="https://streak-stats.demolab.com?user=Fenohasina08&theme=tokyonight"/>
 </p>
 
-<!-- TOTAL_CONTRIBUTIONS_START -->
-
-**Total des commits (y compris forks) : 158**
-
-<!-- TOTAL_CONTRIBUTIONS_END -->
----
-
-# 📈 Activité GitHub (par mois)
-
-<!-- MONTHLY_COMMITS_START -->
-
-| Mois | 2024 | 2025 | 2026 |
-|---|---|---|---|
-| Janvier | 0 | 0 | 13 |
-| Février | 0 | 0 | 33 |
-| Mars | 0 | 2 | 77 |
-| Avril | 0 | 6 | _ |
-| Mai | 0 | 1 | _ |
-| Juin | 0 | 1 | _ |
-| Juillet | 0 | 10 | _ |
-| Août | 0 | 5 | _ |
-| Septembre | 0 | 4 | _ |
-| Octobre | 2 | 0 | _ |
-| Novembre | 0 | 0 | _ |
-| Décembre | 0 | 4 | _ |
-
-<!-- MONTHLY_COMMITS_END -->
-
----
-
-# 🏆 Trophées GitHub
-
-<p align="center">
- <img src="https://github-profile-trophy.vercel.app/?username=Fenohasina08&theme=tokyonight&margin-w=15" alt="Trophées de profil GitHub de Fenohasina08">
- </p>
-
----
+ 
 
 # 🚀 Projets
 
