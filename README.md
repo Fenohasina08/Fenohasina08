@@ -90,4 +90,6 @@
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:6DB33F,100:36BCF7&height=100&section=footer"/>
 </p>
 
+<a href="https://ghcommits.com"><img src="https://ghcommits.com/api/badge/fenohasina08.svg" alt="GitHub Commits Badge" /></a>
+
 ⭐ Thanks for visiting my profile!
